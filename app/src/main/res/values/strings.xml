@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">RedAppMobile</string>
+    <string name="app_name">Teams</string>
+    <string name="profile_icon">Profile settings</string>
+    <string name="login_username">Username</string>
+    <string name="login_apiKey">Api Key</string>
+    <string name="login_save">Save</string>
+    <string name="login_logo_descriptor">Logo of our application.</string>
+    <string name="login_username_accessibility">Enter your username here.</string>
+    <string name="login_apikey_accessibility">Enter your api key here.</string>
+    <string name="description_header_background">Header background</string>
 </resources>

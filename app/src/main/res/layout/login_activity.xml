@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ic_launcher_background"
+    tools:context=".LoginActivity">
+
+    <EditText
+        android:id="@+id/input_username"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:autofillHints="username"
+        android:background="@drawable/costum_text_field"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="@string/login_username"
+        android:includeFontPadding="true"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textColor="@color/main_color_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_apiKey"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints="apikey"
+        android:background="@drawable/costum_text_field"
+        android:drawableStart="@drawable/ic_key"
+        android:drawableLeft="@drawable/ic_key"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="@string/login_apiKey"
+        android:includeFontPadding="true"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textColor="@color/main_color_red"
+        app:layout_constraintBottom_toTopOf="@+id/btn_saveProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_username" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="164dp"
+        android:layout_height="164dp"
+        app:layout_constraintBottom_toTopOf="@+id/input_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:contentDescription="@string/login_logo_descriptor" />
+
+    <Button
+        android:id="@+id/btn_saveProfile"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_save_button"
+        android:foreground="@drawable/custom_save_button"
+        android:text="@string/login_save"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:backgroundTint="@color/main_color_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:ignore="UnusedAttribute" />
+</androidx.constraintlayout.widget.ConstraintLayout>
