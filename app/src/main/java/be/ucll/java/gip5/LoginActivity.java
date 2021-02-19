@@ -1,6 +1,7 @@
 package be.ucll.java.gip5;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
+
+    Toolbar toolbar;
 
     EditText username_field, apiKey_field;
     Button buttonSave;
@@ -23,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         username_field = findViewById(R.id.input_username);
         apiKey_field = findViewById(R.id.input_apiKey);
@@ -39,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         if(apikey != null){
             apiKey_field.setText(apikey);
+        }
+        if(username != null && apikey != null && !username.trim().isEmpty() && !apikey.trim().isEmpty()){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         }
 
         buttonSave.setOnClickListener(v -> {

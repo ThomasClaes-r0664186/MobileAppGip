@@ -8,4 +8,6 @@
     <string name="login_username_accessibility">Enter your username here.</string>
     <string name="login_apikey_accessibility">Enter your api key here.</string>
     <string name="description_header_background">Header background</string>
+    <string name="countdown_text">Next game in:</string>
+    <string name="countdown_placeholder">XX:XX:XX</string>
 </resources>
