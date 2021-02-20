@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -29,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         username_field = findViewById(R.id.input_username);
         apiKey_field = findViewById(R.id.input_apiKey);
@@ -48,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
             apiKey_field.setText(apikey);
         }
         if(username != null && apikey != null && !username.trim().isEmpty() && !apikey.trim().isEmpty()){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_back);
         }
 
         buttonSave.setOnClickListener(v -> {

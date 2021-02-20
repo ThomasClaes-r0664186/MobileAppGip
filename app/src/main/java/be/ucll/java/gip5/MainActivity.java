@@ -7,14 +7,46 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
+import be.ucll.java.gip5.model.GamesReturn;
+import be.ucll.java.gip5.model.Participant;
+
+
+public class MainActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener{
+
+    TextView txt_temporary;
 
     Toolbar toolbar;
+    TextView txt_countdown;
     SharedPreferences sharedPreferences;
+
+    private RequestQueue queue;
+
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_APIKEY = "apikey";
@@ -24,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.my_toolbar);
+        txt_countdown = findViewById(R.id.txt_timerTxt);
+        txt_temporary = findViewById(R.id.txt_temporary);
+        txt_temporary.setText(R.string.txt_temporary_placeholder);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -36,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
         if(username == null || apikey == null || username.trim().isEmpty() || apikey.trim().isEmpty()){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        }
+        else{
+            //do nothing
+
+            getGames();
+
+            //Send the request to the api and show the games.
         }
     }
 
@@ -53,5 +95,85 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getGames(){
+        queue = Volley.newRequestQueue(getApplicationContext());
+
+        //on using the request dynamic, make sure you encode the dynamic part =>
+        /*
+            try {
+                searchedCity = URLEncoder.encode(searchedCity, "UTF-8");
+            }catch (UnsupportedEncodingException ignored){}
+        */
+
+        String url = getString(R.string.url_allgames_player); //Change this to try out another URL
+
+        Log.i("URL used: ", url);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+        queue.add(req);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(Object response) {
+        JSONObject jsono = (JSONObject) response;
+
+        Log.i("URL used: ", jsono.toString());
+
+        if(jsono.has("Participants")){
+            handlePlayer(jsono);
+        }
+        else if(jsono.has("Games")){
+            handleOther(jsono);
+        }
+        else{
+            Toast.makeText(getApplicationContext(),
+                    getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void handlePlayer(JSONObject jsono){
+        GamesReturn repo = new Gson().fromJson(jsono.toString(), GamesReturn.class);
+
+        txt_temporary.setText("Result: \n");
+
+        if(repo != null
+                && repo.getParticipants() != null
+                && repo.getParticipants().size() > 0
+                && repo.getRoles() != null
+                && repo.getRoles().size() > 0){
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                //something wrong with the difference calculator.
+                String timeTxt = repo.getParticipants().get(0).getGame().getStartTime();
+                LocalDateTime time = LocalDateTime.parse(timeTxt);
+
+                Duration duration = Duration.between(LocalDateTime.now(), time);
+
+                String timeLeft = duration.toDays() + ":" +
+                        duration.minusDays(duration.toDays()).toHours() + ":"
+                        + duration.minusHours(duration.minusDays(duration.toDays()).toHours()).toMinutes();
+
+                txt_countdown.setText(timeLeft);
+            }
+            else{
+                //create a toast to say the android level isn't high enough for the timer.
+            }
+            for (Participant p:repo.getParticipants()) {
+                txt_temporary.append(p.toString() + "\n" );
+            }
+        }
+    }
+
+    public void handleOther(JSONObject jsono){
+        //todo: handle other allgames request.
     }
 }

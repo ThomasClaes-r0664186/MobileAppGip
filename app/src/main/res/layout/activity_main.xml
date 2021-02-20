@@ -29,7 +29,7 @@
     <include layout="@layout/appbar" />
 
     <TextView
-        android:id="@+id/txt_countdownTxt"
+        android:id="@+id/txt_countdownLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -52,17 +52,27 @@
         android:textColor="@color/design_default_color_background"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_countdownTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_countdownLbl" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toStartOf="@+id/txt_countdownTxt"
+        app:layout_constraintEnd_toStartOf="@+id/txt_countdownLbl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher"
         android:contentDescription="@string/login_logo_descriptor" />
+
+    <TextView
+        android:id="@+id/txt_temporary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_temporary_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
