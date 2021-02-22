@@ -41,6 +41,8 @@ import be.ucll.java.gip5.model.Participant;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener{
 
+    //todo: fix permission pop-up on phone.
+
     Toolbar toolbar;
     TextView txt_countdown;
     SharedPreferences sharedPreferences;
