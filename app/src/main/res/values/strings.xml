@@ -21,4 +21,8 @@
     <string name="something_went_wrong_with_request">The request didn\'t quite go as planned.</string>
     <string name="txt_temporary_placeholder">Placeholder</string>
     <string name="url_domain">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com</string>
+    <string name="vs_txt">VS</string>
+    <string name="opponent_placeholder_txt">Opponent</string>
+    <string name="time_placeholder_txt">00:00</string>
+    <string name="date_placeholder_txt">01 jan. 2021</string>
 </resources>

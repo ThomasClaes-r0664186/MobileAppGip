@@ -3,6 +3,8 @@ package be.ucll.java.gip5;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,11 +41,10 @@ import be.ucll.java.gip5.model.Participant;
 
 public class MainActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener{
 
-    TextView txt_temporary;
-
     Toolbar toolbar;
     TextView txt_countdown;
     SharedPreferences sharedPreferences;
+    RecyclerView recyclerView;
 
     private RequestQueue queue;
 
@@ -55,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         toolbar = findViewById(R.id.my_toolbar);
         txt_countdown = findViewById(R.id.txt_timerTxt);
-        txt_temporary = findViewById(R.id.txt_temporary);
-        txt_temporary.setText(R.string.txt_temporary_placeholder);
+        recyclerView = findViewById(R.id.gameRecyclerView);
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     public void getGames(){
         queue = Volley.newRequestQueue(getApplicationContext());
 
-        //on using the request dynamic, make sure you encode the dynamic part =>
+        //todo: on using the request dynamic, make sure you encode the dynamic part =>
         /*
             try {
                 searchedCity = URLEncoder.encode(searchedCity, "UTF-8");
@@ -118,11 +119,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        //todo handle invalid call -> login
         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onResponse(Object response) {
+        //todo handle invalid call -> login
         JSONObject jsono = (JSONObject) response;
 
         Log.i("URL used: ", jsono.toString());
@@ -143,8 +146,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     public void handlePlayer(JSONObject jsono){
         GamesReturn repo = new Gson().fromJson(jsono.toString(), GamesReturn.class);
 
-        txt_temporary.setText("Result: \n");
-
         if(repo != null
                 && repo.getParticipants() != null
                 && repo.getParticipants().size() > 0
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 && repo.getRoles().size() > 0){
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                //something wrong with the difference calculator.
+                //todo: something wrong with the difference calculator.
                 String timeTxt = repo.getParticipants().get(0).getGame().getStartTime();
                 LocalDateTime time = LocalDateTime.parse(timeTxt);
 
@@ -165,11 +166,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 txt_countdown.setText(timeLeft);
             }
             else{
-                //create a toast to say the android level isn't high enough for the timer.
+                //todo: create a toast to say the android level isn't high enough for the timer.
             }
-            for (Participant p:repo.getParticipants()) {
-                txt_temporary.append(p.toString() + "\n" );
-            }
+
+            //todo: initiate recycleview
+            GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, repo);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
