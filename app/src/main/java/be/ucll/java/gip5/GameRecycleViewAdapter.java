@@ -1,6 +1,7 @@
 package be.ucll.java.gip5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,12 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
         //todo: check at what place the time exaclty is.
         holder.time_txt.setText(game.getStartTime().substring(11, 16));
         holder.date_txt.setText(formatDateString(game.getStartTime()));
+
+        holder.mainLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, GameDetailActivity.class);
+            intent.putExtra("gameid", game.getId().intValue());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -93,7 +100,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView opp_txt, time_txt, date_txt;
-        ConstraintLayout cardviewBg;
+        ConstraintLayout cardviewBg, mainLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,6 +108,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
             time_txt = itemView.findViewById(R.id.time_txt);
             date_txt = itemView.findViewById(R.id.date_txt);
             cardviewBg = itemView.findViewById(R.id.cardview_background);
+            mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }
 

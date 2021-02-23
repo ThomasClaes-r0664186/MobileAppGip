@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="be.ucll.java.gip5">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -14,10 +14,13 @@
         android:theme="@style/Theme.RedAppMobile"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".GameDetailActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
