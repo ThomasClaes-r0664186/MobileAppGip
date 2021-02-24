@@ -3,11 +3,15 @@ package be.ucll.java.gip5;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,8 +44,6 @@ import be.ucll.java.gip5.model.Participant;
 
 
 public class MainActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener{
-
-    //todo: fix permission pop-up on phone.
 
     Toolbar toolbar;
     TextView txt_countdown;
@@ -76,12 +78,14 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             startActivity(intent);
         }
         else{
-            //do nothing
-
             getGames();
-
-            //Send the request to the api and show the games.
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getGames();
     }
 
     @Override
@@ -102,13 +106,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     public void getGames(){
         queue = Volley.newRequestQueue(getApplicationContext());
-
-        //todo: on using the request dynamic, make sure you encode the dynamic part =>
-        /*
-            try {
-                searchedCity = URLEncoder.encode(searchedCity, "UTF-8");
-            }catch (UnsupportedEncodingException ignored){}
-        */
 
         String url = getString(R.string.url_allgames_player); //Change this to try out another URL
 
@@ -168,7 +165,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 txt_countdown.setText(timeLeft);
             }
             else{
-                //todo: create a toast to say the android level isn't high enough for the timer.
+                String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
+                Toast.makeText(getApplicationContext(), errorTxt, Toast.LENGTH_LONG).show();
             }
 
             //todo: initiate recycleview
