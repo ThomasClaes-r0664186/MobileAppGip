@@ -40,4 +40,5 @@
     <string name="error_login_page"><![CDATA[Username &amp; apikey can not be empty!]]></string>
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
+    <string name="details_comment_section">Type your comment here...</string>
 </resources>

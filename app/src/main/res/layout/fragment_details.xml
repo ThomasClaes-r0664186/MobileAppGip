@@ -132,6 +132,7 @@
                 android:background="@color/main_color_red"/>
 
             <LinearLayout
+                android:id="@+id/radiogroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -232,8 +233,32 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"/>
                 </RadioGroup>
-
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radiogroup"
+                android:weightSum="1"
+                android:layout_marginTop="10dp" android:gravity="center">
+
+                <!-- fix styling of big input box -->
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="0.8"
+                    android:autofillHints="@string/details_comment_section"
+                    android:hint="@string/details_comment_section"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:gravity="top"/>
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>
