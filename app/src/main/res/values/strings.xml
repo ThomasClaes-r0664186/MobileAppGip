@@ -37,4 +37,7 @@
     <string name="location_placeholder_txt">Meenselstraat 118 \n3211 Binkom</string>
     <string name="address_logo_description">Address logo</string>
     <string name="availability_txt">Availability</string>
+    <string name="error_login_page"><![CDATA[Username &amp; apikey can not be empty!]]></string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
 </resources>

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
-    private static final String KEY_APIKEY = "apikey";
+    private static final String KEY_PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         String username = sharedPreferences.getString(KEY_USERNAME, null);
-        String apikey = sharedPreferences.getString(KEY_APIKEY, null);
+        String apikey = sharedPreferences.getString(KEY_PASSWORD, null);
 
         if(username == null || apikey == null || username.trim().isEmpty() || apikey.trim().isEmpty()){
             Intent intent = new Intent(this, LoginActivity.class);

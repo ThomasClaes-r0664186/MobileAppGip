@@ -146,56 +146,91 @@
                     android:layout_weight="0.8"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/main_color_red">
+                    android:background="@drawable/background_radio_group">
 
                     <RadioButton
                         android:id="@+id/radioButton1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
                     <RadioButton
                         android:id="@+id/radioButton7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RadioButton"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:textColor="#ffffff"
+                        android:buttonTint="#ffffff"
+                        tools:targetApi="lollipop"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
                 </RadioGroup>
 
             </LinearLayout>
