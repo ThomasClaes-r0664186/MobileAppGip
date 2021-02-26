@@ -37,6 +37,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import be.ucll.java.gip5.model.GamesReturn;
@@ -153,16 +154,18 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 //todo: something wrong with the difference calculator.
-                String timeTxt = repo.getParticipants().get(0).getGame().getStartTime();
+                String timeTxt = repo.getParticipants().get(4).getGame().getStartTime();
                 LocalDateTime time = LocalDateTime.parse(timeTxt);
 
+                /*
                 Duration duration = Duration.between(LocalDateTime.now(), time);
 
                 String timeLeft = duration.toDays() + ":" +
                         duration.minusDays(duration.toDays()).toHours() + ":"
                         + duration.minusHours(duration.minusDays(duration.toDays()).toHours()).toMinutes();
 
-                txt_countdown.setText(timeLeft);
+                 */
+                txt_countdown.setText(calculateDateDiff(time));
             }
             else{
                 String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
@@ -178,5 +181,29 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     public void handleOther(JSONObject jsono){
         //todo: handle other allgames request.
+    }
+
+    public String calculateDateDiff(LocalDateTime dateToCalc){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            LocalDateTime dateNow = LocalDateTime.now();
+
+            LocalDateTime fromTemp = LocalDateTime.from(dateNow);
+
+            long days = fromTemp.until(dateToCalc, ChronoUnit.DAYS);
+            fromTemp = fromTemp.plusDays(days);
+
+            long hours = fromTemp.until(dateToCalc, ChronoUnit.HOURS);
+            fromTemp = fromTemp.plusHours(hours);
+
+            long minutes = fromTemp.until(dateToCalc, ChronoUnit.MINUTES);
+
+            return days + ":" + hours + ":" + minutes;
+        }
+        else{
+            String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
+            Toast.makeText(getApplicationContext(), errorTxt, Toast.LENGTH_LONG).show();
+            return "00:00:00";
+        }
     }
 }
