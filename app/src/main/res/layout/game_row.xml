@@ -23,7 +23,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="110dp"
+            android:layout_height="140dp"
             android:layout_weight="0.8"
             app:cardCornerRadius="15dp">
 
@@ -36,6 +36,22 @@
                 android:background="@drawable/game_row_background_gray">
 
                 <TextView
+                    android:id="@+id/home_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    tools:ignore="RtlSymmetry"
+                    android:text="@string/home_placeholder_txt"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
                     android:id="@+id/vs_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +61,7 @@
                     android:text="@string/vs_txt"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/home_txt"/>
 
                 <TextView
                     android:id="@+id/opponent_txt"
@@ -74,6 +90,17 @@
                     android:text="@string/time_placeholder_txt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:text="@string/home_placeholder_txt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/time_txt"
+                    app:layout_constraintEnd_toStartOf="@id/date_txt"
+                    />
 
                 <TextView
                     android:id="@+id/date_txt"

@@ -70,10 +70,14 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
         }
 
         if(game.getTeam1().getHome()){
+            holder.home_txt.setText(game.getTeam1().getTitle());
             holder.opp_txt.setText(game.getTeam2().getTitle());
+            holder.place_txt.setText(context.getText(R.string.home_placeholder_txt));
         }
         else{
+            holder.home_txt.setText(game.getTeam2().getTitle());
             holder.opp_txt.setText(game.getTeam1().getTitle());
+            holder.place_txt.setText(context.getText(R.string.away_txt));
         }
 
         //todo: check at what place the time exaclty is.
@@ -99,7 +103,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView opp_txt, time_txt, date_txt;
+        TextView opp_txt, time_txt, date_txt, home_txt, place_txt;
         ConstraintLayout cardviewBg, mainLayout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -107,6 +111,8 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
             opp_txt = itemView.findViewById(R.id.opponent_txt);
             time_txt = itemView.findViewById(R.id.time_txt);
             date_txt = itemView.findViewById(R.id.date_txt);
+            home_txt = itemView.findViewById(R.id.home_txt);
+            place_txt = itemView.findViewById(R.id.place);
             cardviewBg = itemView.findViewById(R.id.cardview_background);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }

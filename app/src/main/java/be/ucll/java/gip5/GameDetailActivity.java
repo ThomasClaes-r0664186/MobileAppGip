@@ -42,15 +42,18 @@ public class GameDetailActivity extends AppCompatActivity {
         DetailsFragment detailsFrag = new DetailsFragment(gameId);
         OverviewFragment overviewFrag = new OverviewFragment(gameId);
 
+        setDetailsClicked();
         getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
 
         detailsBtn.setOnClickListener(v -> {
             //todo: change style of button
+            setDetailsClicked();
             getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
         });
 
         overviewBtn.setOnClickListener(v -> {
             //todo: change style of button
+            setOverviewClicked();
             getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, overviewFrag).commit();
         });
 
@@ -74,4 +77,21 @@ public class GameDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void setDetailsClicked(){
+        detailsBtn.setBackground(getResources().getDrawable(R.drawable.btn_selected_left));
+        detailsBtn.setTextColor(getResources().getColor(R.color.main_color_red));
+
+        overviewBtn.setBackground(getResources().getDrawable(R.drawable.btn_notselected_right));
+        overviewBtn.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    public void setOverviewClicked(){
+        detailsBtn.setBackground(getResources().getDrawable(R.drawable.btn_notselected_left));
+        detailsBtn.setTextColor(getResources().getColor(R.color.white));
+
+        overviewBtn.setBackground(getResources().getDrawable(R.drawable.btn_selected_right));
+        overviewBtn.setTextColor(getResources().getColor(R.color.main_color_red));
+    }
+
 }

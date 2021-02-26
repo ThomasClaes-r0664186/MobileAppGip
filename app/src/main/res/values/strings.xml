@@ -41,4 +41,8 @@
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="details_comment_section">Type your comment here...</string>
+    <string name="txt_send_btn">Send</string>
+    <string name="details_overview_section">Type your report here...</string>
+    <string name="home_placeholder_txt">Home</string>
+    <string name="away_txt">Away</string>
 </resources>
