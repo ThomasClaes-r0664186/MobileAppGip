@@ -154,17 +154,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 //todo: something wrong with the difference calculator.
-                String timeTxt = repo.getParticipants().get(4).getGame().getStartTime();
+                String timeTxt = repo.getParticipants().get(2).getGame().getStartTime();
                 LocalDateTime time = LocalDateTime.parse(timeTxt);
 
-                /*
-                Duration duration = Duration.between(LocalDateTime.now(), time);
-
-                String timeLeft = duration.toDays() + ":" +
-                        duration.minusDays(duration.toDays()).toHours() + ":"
-                        + duration.minusHours(duration.minusDays(duration.toDays()).toHours()).toMinutes();
-
-                 */
                 txt_countdown.setText(calculateDateDiff(time));
             }
             else{
