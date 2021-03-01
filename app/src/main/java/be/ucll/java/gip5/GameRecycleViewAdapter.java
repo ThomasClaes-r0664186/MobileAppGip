@@ -65,30 +65,42 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
                     break;
             }
         }
-        else{
+        else if(repo.getGames().size()>0){
             game = repo.getGames().get(position);
         }
+        else{
+            game = null;
+        }
 
-        if(game.getTeam1().getHome()){
-            holder.home_txt.setText(game.getTeam1().getTitle());
-            holder.opp_txt.setText(game.getTeam2().getTitle());
-            holder.place_txt.setText(context.getText(R.string.home_placeholder_txt));
+        if(game ==null){
+            holder.vs_txt.setText(R.string.txt_game_repo_empty);
+            holder.opp_txt.setText("");
+            holder.time_txt.setText("");
+            holder.date_txt.setText("");
+            holder.home_txt.setText("");
+            holder.place_txt.setText("");
         }
         else{
-            holder.home_txt.setText(game.getTeam2().getTitle());
-            holder.opp_txt.setText(game.getTeam1().getTitle());
-            holder.place_txt.setText(context.getText(R.string.away_txt));
+            if(game.getTeam1().getHome()){
+                holder.home_txt.setText(game.getTeam1().getTitle());
+                holder.opp_txt.setText(game.getTeam2().getTitle());
+                holder.place_txt.setText(context.getText(R.string.home_placeholder_txt));
+            }
+            else{
+                holder.home_txt.setText(game.getTeam2().getTitle());
+                holder.opp_txt.setText(game.getTeam1().getTitle());
+                holder.place_txt.setText(context.getText(R.string.away_txt));
+            }
+
+            holder.time_txt.setText(game.getStartTime().substring(11, 16));
+            holder.date_txt.setText(formatDateString(game.getStartTime()));
+
+            holder.mainLayout.setOnClickListener(v -> {
+                Intent intent = new Intent(context, GameDetailActivity.class);
+                intent.putExtra("gameid", game.getId().intValue());
+                context.startActivity(intent);
+            });
         }
-
-        //todo: check at what place the time exaclty is.
-        holder.time_txt.setText(game.getStartTime().substring(11, 16));
-        holder.date_txt.setText(formatDateString(game.getStartTime()));
-
-        holder.mainLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(context, GameDetailActivity.class);
-            intent.putExtra("gameid", game.getId().intValue());
-            context.startActivity(intent);
-        });
     }
 
     @Override
@@ -96,18 +108,22 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
         if(repo.getParticipants().size()>0){
             return repo.getParticipants().size();
         }
-        else{
+        else if(repo.getGames().size()>0){
             return repo.getGames().size();
+        }
+        else{
+            return 1;
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView opp_txt, time_txt, date_txt, home_txt, place_txt;
+        TextView vs_txt, opp_txt, time_txt, date_txt, home_txt, place_txt;
         ConstraintLayout cardviewBg, mainLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            vs_txt = itemView.findViewById(R.id.vs_txt);
             opp_txt = itemView.findViewById(R.id.opponent_txt);
             time_txt = itemView.findViewById(R.id.time_txt);
             date_txt = itemView.findViewById(R.id.date_txt);
@@ -120,8 +136,6 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
 
     public String formatDateString(String date){
         String[] months = new DateFormatSymbols().getMonths();
-
-        //todo: fix month name: months[Integer.parseInt(date.substring(5, 6))-1]
         int month = Integer.parseInt(date.substring(5, 7)) - 1;
         return date.substring(8, 10) + " " +  months[month].substring(0,3) + ". " + date.substring(0, 4);
     }

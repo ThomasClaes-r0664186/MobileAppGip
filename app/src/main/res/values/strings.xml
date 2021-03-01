@@ -48,4 +48,11 @@
     <string name="txt_clock_icon">Clock icon</string>
     <string name="txt_placeholder_review">This is a test review.</string>
     <string name="txt_refesh_logo">refesh logo</string>
+    <string name="txt_yes">I\'ll be there!</string>
+    <string name="txt_probably">Probably, not sure.</string>
+    <string name="txt_backup">Probably not, I\'ll be reserve</string>
+    <string name="txt_probably_not">Most likely not.</string>
+    <string name="txt_sick">Can\'t, I\'m sick.</string>
+    <string name="txt_unavailable">Can\'t, I\'m busy</string>
+    <string name="txt_game_repo_empty">There are no games scheduled.</string>
 </resources>

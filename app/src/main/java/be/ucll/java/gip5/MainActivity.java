@@ -167,6 +167,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
+        else{
+            Toast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void handleOther(JSONObject jsono){
