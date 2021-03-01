@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 && repo.getRoles().size() > 0){
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                //todo: something wrong with the difference calculator.
                 String timeTxt = repo.getParticipants().get(2).getGame().getStartTime();
                 LocalDateTime time = LocalDateTime.parse(timeTxt);
 
@@ -164,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 Toast.makeText(getApplicationContext(), errorTxt, Toast.LENGTH_LONG).show();
             }
 
-            //todo: initiate recycleview
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, repo);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
