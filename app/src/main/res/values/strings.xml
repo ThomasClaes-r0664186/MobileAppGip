@@ -46,4 +46,6 @@
     <string name="home_placeholder_txt">Home</string>
     <string name="away_txt">Away</string>
     <string name="txt_clock_icon">Clock icon</string>
+    <string name="txt_placeholder_review">This is a test review.</string>
+    <string name="txt_refesh_logo">refesh logo</string>
 </resources>
