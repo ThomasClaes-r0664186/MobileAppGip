@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getText(R.string.error_login_page), Toast.LENGTH_LONG).show();
             }
             else{
+                //todo: make call here and save api key, if not correct -> toast incorrect & stay on page
                 editor.putString(KEY_USERNAME, username_field.getText().toString());
                 editor.putString(KEY_PASSWORD, apiKey_field.getText().toString());
-                //todo: make call here and save api key
                 editor.apply();
                 finish();
             }

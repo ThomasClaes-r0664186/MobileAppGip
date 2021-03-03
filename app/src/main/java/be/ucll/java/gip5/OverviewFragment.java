@@ -22,7 +22,14 @@ public class OverviewFragment extends Fragment {
     RecyclerView recyclerView;
     int gameId;
 
-    //todo: make call to mock api using game id
+    //todo: make call to api using game id
+
+    //todo: check if reporter -> else set part invisible
+
+    //todo: handle refresh button -> make call to api
+
+    //todo: handle input box & onclick handler send btn
+
     public OverviewFragment() {
         // Required empty public constructor
     }

@@ -49,7 +49,6 @@ public class OverviewRecycleViewAdapter extends RecyclerView.Adapter<OverviewRec
     }
 
     public class OverviewHolder extends RecyclerView.ViewHolder {
-        //todo: put all elements from the row here
         TextView time_txt, review_txt;
 
         public OverviewHolder(@NonNull View itemView) {

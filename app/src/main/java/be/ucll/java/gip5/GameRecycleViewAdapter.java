@@ -38,7 +38,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Game game;
-        if(repo.getParticipants().size()>0){
+        if(repo.getParticipants() != null && repo.getParticipants().size()>0){
             game = repo.getParticipants().get(position).getGame();
             switch (repo.getParticipants().get(position).getAvailability()){
                 case "yes": //green
@@ -65,7 +65,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
                     break;
             }
         }
-        else if(repo.getGames().size()>0){
+        else if(repo.getGames() != null && repo.getGames().size()>0){
             game = repo.getGames().get(position);
         }
         else{

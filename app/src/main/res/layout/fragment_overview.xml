@@ -52,6 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="50dp"
                 android:gravity="center">
+                <!-- todo: add this above: android:visibility="gone" -->
 
                 <EditText
                     android:background="@drawable/costum_input_field"
@@ -81,6 +82,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingBottom="10dp"
                 android:gravity="center">
+                <!-- todo: add this above: android:visibility="gone" -->
 
                 <Button
                     android:id="@+id/send_button"

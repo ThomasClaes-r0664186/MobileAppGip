@@ -46,13 +46,11 @@ public class GameDetailActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
 
         detailsBtn.setOnClickListener(v -> {
-            //todo: change style of button
             setDetailsClicked();
             getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
         });
 
         overviewBtn.setOnClickListener(v -> {
-            //todo: change style of button
             setOverviewClicked();
             getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, overviewFrag).commit();
         });

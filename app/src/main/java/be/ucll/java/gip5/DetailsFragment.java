@@ -15,7 +15,12 @@ public class DetailsFragment extends Fragment {
 
     int gameId;
 
-    //todo: make call to mock api using game id
+    //todo: make call to api using game id
+
+    //todo: check if player -> else set part invisible
+
+    //todo: handle onclick save radiobutton & inputbox
+
     public DetailsFragment() {
         // Required empty public constructor
     }
