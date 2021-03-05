@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         txt_countdown = findViewById(R.id.txt_timerTxt);
         recyclerView = findViewById(R.id.gameRecyclerView);
 
+
+        txt_countdown.setText(getString(R.string.countdown_placeholder));
+
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -90,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     protected void onRestart() {
         super.onRestart();
+        txt_countdown = findViewById(R.id.txt_timerTxt);
+        txt_countdown.setText(getString(R.string.countdown_placeholder));
 
         getGames();
     }
@@ -137,8 +142,9 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        //todo handle invalid call -> login
-        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),
+                getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request),
+                Toast.LENGTH_LONG).show();
 
         GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
         recyclerView.setAdapter(adapter);
@@ -156,10 +162,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             handleGames(jsono);
         }
         else{
-            Toast.makeText(getApplicationContext(),
-                    getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request),
-                    Toast.LENGTH_LONG).show();
-
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

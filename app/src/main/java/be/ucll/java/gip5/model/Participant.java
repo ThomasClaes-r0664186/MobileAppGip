@@ -18,6 +18,15 @@ public class Participant {
     @Expose
     private Person person;
 
+    public Participant(){}
+
+    public Participant(Game game){
+        this.id = 0;
+        this.availability = null;
+        this.game = game;
+        this.person = null;
+    }
+
     public Integer getId() {
         return id;
     }

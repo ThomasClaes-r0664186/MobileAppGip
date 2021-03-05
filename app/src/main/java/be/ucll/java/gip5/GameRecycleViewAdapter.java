@@ -11,11 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 
 import be.ucll.java.gip5.model.Game;
 import be.ucll.java.gip5.model.GamesReturn;
+import be.ucll.java.gip5.model.Participant;
 
 public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleViewAdapter.ViewHolder> {
 
@@ -99,8 +102,26 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
             holder.date_txt.setText(formatDateString(game.getStartTime()));
 
             holder.mainLayout.setOnClickListener(v -> {
+                String jsonPart = "";
+                String jsonGame = "";
+
+                if(repo.getParticipants() != null && repo.getParticipants().size()>0){
+                    Participant tempPart = repo.getParticipants().get(position);
+                    jsonPart = (new Gson().toJson(tempPart));
+                }else{
+                    Game tempGame = repo.getGames().get(position);
+                    jsonGame = (new Gson().toJson(tempGame));
+                }
+
                 Intent intent = new Intent(context, GameDetailActivity.class);
-                intent.putExtra("gameid", game.getId().intValue());
+
+                if(!jsonPart.isEmpty()){
+                    intent.putExtra("partString", jsonPart);
+                }
+                else{
+                    intent.putExtra("gameString", jsonGame);
+                }
+
                 context.startActivity(intent);
             });
         }

@@ -8,16 +8,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.gson.Gson;
+
 import java.util.Objects;
+
+import be.ucll.java.gip5.model.Game;
+import be.ucll.java.gip5.model.Participant;
 
 public class GameDetailActivity extends AppCompatActivity {
 
-    int gameId;
     Toolbar toolbar;
     Button detailsBtn, overviewBtn;
 
@@ -35,26 +40,35 @@ public class GameDetailActivity extends AppCompatActivity {
         detailsBtn = findViewById(R.id.buttonDetails);
         overviewBtn = findViewById(R.id.buttonOverview);
 
-        gameId = getIntent().getIntExtra("gameid", -1);
-        if(gameId < 0){
+        String partJson = getIntent().getStringExtra("partString");
+        String gameJson = getIntent().getStringExtra("gameString");
+
+        Participant participant = new Participant();
+
+        if(partJson != null){
+            participant = new Gson().fromJson(partJson, Participant.class);
+        }else if(gameJson != null){
+            participant = new Participant(new Gson().fromJson(gameJson, Game.class));
+        }
+        else {
             Toast.makeText(getApplicationContext(), getString(R.string.faulty_gameid), Toast.LENGTH_LONG).show();
             finish();
         }
 
-        DetailsFragment detailsFrag = new DetailsFragment(gameId);
-        OverviewFragment overviewFrag = new OverviewFragment(gameId);
+        DetailsFragment detailsFragment = new DetailsFragment(participant);
+        OverviewFragment overviewFragment = new OverviewFragment(participant.getGame().getId());
 
         setDetailsClicked();
-        getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFragment).commit();
 
         detailsBtn.setOnClickListener(v -> {
             setDetailsClicked();
-            getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFrag).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, detailsFragment).commit();
         });
 
         overviewBtn.setOnClickListener(v -> {
             setOverviewClicked();
-            getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, overviewFrag).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.gameDetailFragmentHolder, overviewFragment).commit();
         });
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

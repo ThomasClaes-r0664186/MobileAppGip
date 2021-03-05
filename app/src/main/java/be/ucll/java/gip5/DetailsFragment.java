@@ -14,9 +14,13 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
+import be.ucll.java.gip5.model.Game;
+import be.ucll.java.gip5.model.Participant;
+
 public class DetailsFragment extends Fragment {
 
-    int gameId;
+    Game game;
+    Participant participant;
 
     //todo: make call to api using game id
 
@@ -28,8 +32,12 @@ public class DetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DetailsFragment(int gameid) {
-        this.gameId = gameid;
+    public DetailsFragment(Game game) {
+        this.game = game;
+    }
+
+    public DetailsFragment(Participant participant) {
+        this.participant = participant;
     }
 
     @Override
@@ -38,7 +46,7 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), gameId + "", Toast.LENGTH_LONG).show();
+        //Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), gameId + "", Toast.LENGTH_LONG).show();
 
         return view;
     }
