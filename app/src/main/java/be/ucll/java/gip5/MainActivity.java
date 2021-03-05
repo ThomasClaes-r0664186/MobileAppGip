@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(Object response) {
-        //todo handle invalid call -> login
         JSONObject jsono = (JSONObject) response;
 
         Log.i("URL used: ", jsono.toString());

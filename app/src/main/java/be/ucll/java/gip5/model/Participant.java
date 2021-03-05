@@ -11,6 +11,9 @@ public class Participant {
     @SerializedName("availability")
     @Expose
     private String availability;
+    @SerializedName("comment")
+    @Expose
+    private String comment;
     @SerializedName("game")
     @Expose
     private Game game;
@@ -41,6 +44,14 @@ public class Participant {
 
     public void setAvailability(String availability) {
         this.availability = availability;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Game getGame() {

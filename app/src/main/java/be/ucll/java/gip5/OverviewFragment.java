@@ -57,6 +57,7 @@ public class OverviewFragment extends Fragment {
         repoL.add(new Pair<>("14:16", "Er zijn nog niet zo heel veel grote kansen geweest. Als één van beide ploegen wilt winnen, gaan ze toch meer druk moeten zetten en hun kleine kansen afmaken."));
         repoL.add(new Pair<>("14:01", "En we zijn van start gegaan, Binkom begint alvast heel aanvallend."));
 
+        //todo: put adapter in new function, so you can call from onclicklistener
         OverviewRecycleViewAdapter adapter = new OverviewRecycleViewAdapter(getContext(), repoL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
