@@ -21,6 +21,8 @@ public class GameDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button detailsBtn, overviewBtn;
 
+    //todo: fix GameDetail without making another call to the api
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
