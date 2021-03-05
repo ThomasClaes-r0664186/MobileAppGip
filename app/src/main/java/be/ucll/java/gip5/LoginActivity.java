@@ -6,16 +6,32 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+import be.ucll.java.gip5.model.Apikey;
+
+public class LoginActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener {
 
     Toolbar toolbar;
+
+    private RequestQueue queue;
 
     EditText username_field, apiKey_field;
     Button buttonSave;
@@ -24,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_APIKEY = "apikey";
+    private static final String URL = "http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/person/apikey";
+
+    private String usedUsername, usedPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +56,21 @@ public class LoginActivity extends AppCompatActivity {
 
         username_field = findViewById(R.id.input_username);
         apiKey_field = findViewById(R.id.input_apiKey);
-
         buttonSave = findViewById(R.id.btn_saveProfile);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         String username = sharedPreferences.getString(KEY_USERNAME, null);
-        String apikey = sharedPreferences.getString(KEY_PASSWORD, null);
+        String pw = sharedPreferences.getString(KEY_PASSWORD, null);
+        String apiK = sharedPreferences.getString(KEY_APIKEY, null);
 
         if(username != null){
             username_field.setText(username);
         }
-        if(apikey != null){
-            apiKey_field.setText(apikey);
+        if(pw != null){
+            apiKey_field.setText(pw);
         }
-        if(username != null && apikey != null && !username.trim().isEmpty() && !apikey.trim().isEmpty()){
+        if(username != null && pw != null && apiK != null && !apiK.trim().isEmpty() && !username.trim().isEmpty() && !pw.trim().isEmpty()){
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_back);
@@ -58,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonSave.setOnClickListener(v -> {
             //when clicked on save, put data on sharedpreferences
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             if(username_field.getText() == null
                     || username_field.getText().toString().isEmpty()
                     || apiKey_field.getText() == null
@@ -66,13 +85,58 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getText(R.string.error_login_page), Toast.LENGTH_LONG).show();
             }
             else{
-                //todo: make call here and save api key, if not correct -> toast incorrect & stay on page
-                editor.putString(KEY_USERNAME, username_field.getText().toString());
-                editor.putString(KEY_PASSWORD, apiKey_field.getText().toString());
-                editor.apply();
-                finish();
+                usedUsername = username_field.getText().toString();
+                usedPassword = apiKey_field.getText().toString();
+
+                confirmIdentity(usedUsername, usedPassword);
             }
         });
     }
-    //todo: make call to api to confirm identity and receice api key.
+
+    public void confirmIdentity(String username, String password){
+        queue = Volley.newRequestQueue(getApplicationContext());
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put(KEY_USERNAME, username);
+            json.put(KEY_PASSWORD, password);
+        }
+        catch (JSONException e){
+            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, json, this, this);
+
+        queue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(Object response) {
+
+        // Cast into Gson JSONObject
+        JSONObject jsono = (JSONObject) response;
+
+        Apikey apiKey = new Gson().fromJson(jsono.toString(), Apikey.class);
+
+        if(jsono.has("apikey")){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            Log.d("Requested_api_key", apiKey.getApikey());
+
+            editor.putString(KEY_USERNAME, usedUsername);
+            editor.putString(KEY_PASSWORD, usedPassword);
+            editor.putString(KEY_APIKEY, apiKey.getApikey());
+            editor.apply();
+
+            finish();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+        }
+    }
 }

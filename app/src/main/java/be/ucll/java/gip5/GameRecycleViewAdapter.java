@@ -40,7 +40,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
         Game game;
         if(repo.getParticipants() != null && repo.getParticipants().size()>0){
             game = repo.getParticipants().get(position).getGame();
-            switch (repo.getParticipants().get(position).getAvailability()){
+            switch (repo.getParticipants().get(position).getAvailability().toLowerCase()){
                 case "yes": //green
                     holder.cardviewBg.setBackground(context.getResources().getDrawable (R.drawable.game_row_background_green) );
                     break;
@@ -50,7 +50,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
                 case "backup": //orange
                     holder.cardviewBg.setBackground(context.getResources().getDrawable (R.drawable.game_row_background_orange) );
                     break;
-                case "probablyNot": //orange
+                case "probablynot": //orange
                     holder.cardviewBg.setBackground(context.getResources().getDrawable (R.drawable.game_row_background_orange) );
                     break;
                 case "sick": //red
@@ -62,6 +62,8 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
                 case "unchecked": //do nothing
                     break;
                 case "invited": //blue (new feature, back end probably won't be able to implement) => do nothing for now
+                    break;
+                default: //do nothing, the background will stay gray.
                     break;
             }
         }
@@ -80,6 +82,7 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
             holder.home_txt.setText("");
             holder.place_txt.setText("");
         }
+
         else{
             if(game.getTeam1().getHome()){
                 holder.home_txt.setText(game.getTeam1().getTitle());
@@ -105,10 +108,10 @@ public class GameRecycleViewAdapter extends RecyclerView.Adapter<GameRecycleView
 
     @Override
     public int getItemCount() {
-        if(repo.getParticipants().size()>0){
+        if(repo.getParticipants() != null && repo.getParticipants().size()>0){
             return repo.getParticipants().size();
         }
-        else if(repo.getGames().size()>0){
+        else if(repo.getGames() != null && repo.getGames().size()>0){
             return repo.getGames().size();
         }
         else{

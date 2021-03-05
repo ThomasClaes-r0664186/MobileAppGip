@@ -40,6 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import be.ucll.java.gip5.model.Game;
 import be.ucll.java.gip5.model.GamesReturn;
 import be.ucll.java.gip5.model.Participant;
 
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_APIKEY = "apikey";
+    private static final String URL = "http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/allgames/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +75,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         String username = sharedPreferences.getString(KEY_USERNAME, null);
-        String apikey = sharedPreferences.getString(KEY_PASSWORD, null);
+        String pw = sharedPreferences.getString(KEY_PASSWORD, null);
+        String apiK = sharedPreferences.getString(KEY_APIKEY, null);
 
-        if(username == null || apikey == null || username.trim().isEmpty() || apikey.trim().isEmpty()){
+        if(apiK == null || username == null || pw == null || apiK.trim().isEmpty() || username.trim().isEmpty() || pw.trim().isEmpty()){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     protected void onRestart() {
         super.onRestart();
+
         getGames();
     }
 
@@ -106,21 +111,38 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     }
 
     public void getGames(){
-        queue = Volley.newRequestQueue(getApplicationContext());
+        try {
+            sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+            String apiK = sharedPreferences.getString(KEY_APIKEY, null);
 
-        String url = getString(R.string.url_allgames_player); //Change this to try out another URL
+            queue = Volley.newRequestQueue(getApplicationContext());
 
-        Log.i("URL used: ", url);
+            String url = URL + URLEncoder.encode(apiK, "UTF-8"); //Change this to try out another URL
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+            Log.i("URL used: ", url);
 
-        queue.add(req);
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+
+            queue.add(req);
+        }
+        catch (UnsupportedEncodingException e) {
+
+            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong_with_request), Toast.LENGTH_LONG).show();
+
+            GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         //todo handle invalid call -> login
         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+
+        GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -130,33 +152,51 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
         Log.i("URL used: ", jsono.toString());
 
-        if(jsono.has("Participants")){
-            handlePlayer(jsono);
-        }
-        else if(jsono.has("Games")){
-            handleOther(jsono);
+        if(jsono.has("Participants") || jsono.has("Games")){
+            handleGames(jsono);
         }
         else{
             Toast.makeText(getApplicationContext(),
                     getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request),
                     Toast.LENGTH_LONG).show();
+
+            GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
-    public void handlePlayer(JSONObject jsono){
+    public void handleGames(JSONObject jsono){
         GamesReturn repo = new Gson().fromJson(jsono.toString(), GamesReturn.class);
 
-        if(repo != null
-                && repo.getParticipants() != null
-                && repo.getParticipants().size() > 0
-                && repo.getRoles() != null
-                && repo.getRoles().size() > 0){
+        if(repo != null &&
+                ((repo.getParticipants() != null && repo.getParticipants().size() > 0)
+                        || (repo.getGames() != null && repo.getGames().size() > 0))){
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                String timeTxt = repo.getParticipants().get(2).getGame().getStartTime();
-                LocalDateTime time = LocalDateTime.parse(timeTxt);
+                LocalDateTime time;
+                if(repo.getParticipants() != null && repo.getParticipants().size() > 0){
+                    for (Participant par:repo.getParticipants()) {
+                        String timeTxt = par.getGame().getStartTime();
+                        time = LocalDateTime.parse(timeTxt);
 
-                txt_countdown.setText(calculateDateDiff(time));
+                        if(LocalDateTime.now().isBefore(time)){
+                            txt_countdown.setText(calculateDateDiff(time));
+                            break;
+                        }
+                    }
+                }
+                else{
+                    for (Game game:repo.getGames()) {
+                        String timeTxt = game.getStartTime();
+                        time = LocalDateTime.parse(timeTxt);
+
+                        if(LocalDateTime.now().isBefore(time)){
+                            txt_countdown.setText(calculateDateDiff(time));
+                            break;
+                        }
+                    }
+                }
             }
             else{
                 String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
@@ -169,11 +209,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
         else{
             Toast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), Toast.LENGTH_LONG).show();
-        }
-    }
 
-    public void handleOther(JSONObject jsono){
-        //todo: handle other allgames request.
+            GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
     public String calculateDateDiff(LocalDateTime dateToCalc){

@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
@@ -44,6 +46,8 @@ public class OverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
         recyclerView = view.findViewById(R.id.overviewRecyclerView);
+
+        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), gameId + "", Toast.LENGTH_LONG).show();
 
         //this list is to staticly test the view.
         List<Pair<String, String>> repoL = new ArrayList<Pair<String, String>>();
