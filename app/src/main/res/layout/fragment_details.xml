@@ -133,7 +133,7 @@
             <!-- todo: add this above: android:visibility="gone" -->
 
             <LinearLayout
-                android:id="@+id/radiogroup"
+                android:id="@+id/radiogroupLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -145,6 +145,7 @@
                 <!-- todo: add this above: android:visibility="gone" -->
 
                 <RadioGroup
+                    android:id="@+id/radiogroup"
                     android:layout_width="0dp"
                     android:layout_weight="0.8"
                     android:layout_height="wrap_content"
@@ -232,7 +233,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radiogroup"
+                app:layout_constraintTop_toBottomOf="@+id/radiogroupLayout"
                 android:weightSum="1"
                 android:layout_marginTop="10dp" android:gravity="center">
                 <!-- todo: add this above: android:visibility="gone" -->
@@ -249,7 +250,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:gravity="top"
                     android:padding="10dp"
-                    android:inputType="textLongMessage"/>
+                    android:inputType="textMultiLine"
+                    android:maxLines="50"/>
             </LinearLayout>
 
             <LinearLayout

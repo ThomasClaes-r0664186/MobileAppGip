@@ -57,4 +57,7 @@
     <string name="txt_game_repo_empty">There are no games scheduled.</string>
     <string name="url_person_apikey">/person/api</string>
     <string name="error_sending_login">Something went wrong while sendig your credentials.</string>
+    <string name="successfully_send_data">You\'ve successfully send your response.</string>
+    <string name="unsuccessfully_send_data">Your response wasn\'t send successfully, try again.</string>
+    <string name="error_availability_selector">You have to pick an availability.</string>
 </resources>

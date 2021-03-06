@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
             queue = Volley.newRequestQueue(getApplicationContext());
 
-            String url = URL + URLEncoder.encode(apiK, "UTF-8"); //Change this to try out another URL
+            String url = URL + URLEncoder.encode(apiK, "UTF-8");
 
             Log.i("URL used: ", url);
 

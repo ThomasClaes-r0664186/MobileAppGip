@@ -1,10 +1,12 @@
 package be.ucll.java.gip5;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Objects;
 
 import be.ucll.java.gip5.model.Game;
@@ -24,6 +39,14 @@ public class DetailsFragment extends Fragment {
 
     Game game;
     Participant participant;
+    SharedPreferences sharedPreferences;
+
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_APIKEY = "apikey";
+
+    private RequestQueue queue;
+
+    private static final String URL = "http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/participant/";
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -49,9 +72,12 @@ public class DetailsFragment extends Fragment {
 
         //things to set invisible if not a player. & to send data when player
         TextView availabilityHeader = view.findViewById(R.id.txtAvailability);
-        LinearLayout availabilityLayout = view.findViewById(R.id.radiogroup);
+        LinearLayout availabilityLayout = view.findViewById(R.id.radiogroupLayout);
         LinearLayout commentInput = view.findViewById(R.id.layout_edittext_comment);
-        LinearLayout saveButton = view.findViewById(R.id.layout_button_send);
+        LinearLayout saveButtonLayout = view.findViewById(R.id.layout_button_send);
+
+        Button saveButton = view.findViewById(R.id.send_button);
+        RadioGroup radioGroup = view.findViewById(R.id.radiogroup);
 
         //all radio buttons
         RadioButton rb1 = view.findViewById(R.id.radioButton1);
@@ -65,9 +91,10 @@ public class DetailsFragment extends Fragment {
             availabilityHeader.setVisibility(View.GONE);
             availabilityLayout.setVisibility(View.GONE);
             commentInput.setVisibility(View.GONE);
-            saveButton.setVisibility(View.GONE);
+            saveButtonLayout.setVisibility(View.GONE);
         }
         else {
+            int choice;
             switch (participant.getAvailability().toLowerCase()){
                 case "yes": //green
                     rb1.toggle();
@@ -102,10 +129,59 @@ public class DetailsFragment extends Fragment {
             }
 
             saveButton.setOnClickListener(v -> {
-                //todo: send data from radiobutton & commentbox to api
+                String comment = comment_et.getText().toString().trim();
+                int index = (radioGroup.indexOfChild(view.findViewById(radioGroup.getCheckedRadioButtonId()))) + 1; //returns -1 if none selected
+
+                if(index < 1 || index > 6){
+                    Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_availability_selector), Toast.LENGTH_LONG).show();
+                }
+                else {
+                    sendData(index, comment);
+                }
             });
         }
 
         return view;
+    }
+
+    public void sendData(int choice, String comment){
+        try {
+            sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(SHARED_PREF_NAME, getContext().MODE_PRIVATE);
+            String apiK = sharedPreferences.getString(KEY_APIKEY, null);
+
+            String url = URL
+                    + URLEncoder.encode(participant.getGame().getId().toString(), "UTF-8")
+                    + "/"
+                    + URLEncoder.encode(apiK, "UTF-8");
+            Log.i("URL used: ", url);
+
+            queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getApplicationContext());
+
+            JSONObject postData = new JSONObject();
+            try{
+                postData.put("ch", choice+"");
+                postData.put("co", comment);
+            }
+            catch (JSONException e){
+                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                Objects.requireNonNull(getActivity()).finish();
+            }
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postData,
+                    response -> {
+                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.successfully_send_data), Toast.LENGTH_LONG).show();
+                Objects.requireNonNull(getActivity()).finish();
+            },
+                    error -> {
+                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                Objects.requireNonNull(getActivity()).finish();
+            });
+
+            queue.add(req);
+
+        }catch (UnsupportedEncodingException e){
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+            Objects.requireNonNull(getActivity()).finish();
+        }
     }
 }
