@@ -23,6 +23,9 @@ public class Game {
     @SerializedName("team2")
     @Expose
     private Team team2;
+    @SerializedName("ongoingGame")
+    @Expose
+    private Boolean ongoingGame;
 
     public Integer getId() {
         return id;
@@ -72,4 +75,11 @@ public class Game {
         this.team2 = team2;
     }
 
+    public Boolean getOngoingGame() {
+        return ongoingGame;
+    }
+
+    public void setOngoingGame(Boolean ongoingGame) {
+        this.ongoingGame = ongoingGame;
+    }
 }

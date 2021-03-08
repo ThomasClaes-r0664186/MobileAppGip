@@ -26,9 +26,15 @@ public class Person {
     @SerializedName("gender")
     @Expose
     private String gender;
-    @SerializedName("phoneNr")
+    @SerializedName("phoneNumber")
     @Expose
-    private String phoneNr;
+    private String phoneNumber;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("apiKey")
+    @Expose
+    private String apiKey;
 
     public Integer getId() {
         return id;
@@ -86,12 +92,29 @@ public class Person {
         this.gender = gender;
     }
 
-    public String getPhoneNr() {
-        return phoneNr;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNr(String phoneNr) {
-        this.phoneNr = phoneNr;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
 
 }

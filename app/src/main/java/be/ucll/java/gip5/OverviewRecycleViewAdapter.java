@@ -45,7 +45,7 @@ public class OverviewRecycleViewAdapter extends RecyclerView.Adapter<OverviewRec
 
     @Override
     public int getItemCount() {
-        return 5;
+        return repo.size();
     }
 
     public class OverviewHolder extends RecyclerView.ViewHolder {

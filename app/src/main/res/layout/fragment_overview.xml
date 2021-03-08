@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/refresh"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/txt_refesh_logo"
@@ -25,13 +25,16 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 app:srcCompat="@mipmap/ic_refresh"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"
+                android:clickable="true"
+                android:focusable="true" />
 
             <LinearLayout
                 android:id="@+id/linearRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -50,13 +53,13 @@
                 app:layout_constraintTop_toBottomOf="@id/linearRecyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="50dp"
-                android:gravity="center">
-                <!-- todo: add this above: android:visibility="gone" -->
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:visibility="gone">
 
                 <EditText
                     android:background="@drawable/costum_input_field"
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/editTextReport"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="0.8"
@@ -66,7 +69,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:gravity="top"
                     android:padding="10dp"
-                    android:inputType="textLongMessage"/>
+                    android:inputType="textMultiLine"
+                    android:maxLines="50"/>
 
             </LinearLayout>
 
@@ -81,8 +85,8 @@
                 android:weightSum="1"
                 android:layout_marginTop="10dp"
                 android:paddingBottom="10dp"
-                android:gravity="center">
-                <!-- todo: add this above: android:visibility="gone" -->
+                android:gravity="center"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/send_button"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.util.Objects;
 
 import be.ucll.java.gip5.model.Game;
 import be.ucll.java.gip5.model.GamesReturn;

@@ -9,36 +9,35 @@
     <string name="login_apikey_accessibility">Enter your api key here.</string>
     <string name="description_header_background">Header background</string>
     <string name="countdown_text">Next game in:</string>
-    <string name="countdown_placeholder">XX:XX:XX</string>
-    <string name="url_allgames_player">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/allgames/player</string>
-    <string name="url_allgames_reporter">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/allgames/reporter</string>
-    <string name="url_onegame_player_static">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/game/1/player</string>
-    <string name="url_onegame_random_static">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/game/1/randomPerson</string>
-    <string name="url_post_participantchoice_static">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/participant/1/choice</string>
-    <string name="url_gamereports_static">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/gamereports/1</string>
-    <string name="url_post_gamereportcreate_static">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/gamereports/create/1</string>
-    <string name="something_went_wrong">Oops, something went wrong!</string>
+    <string name="countdown_placeholder" translatable="false">XX:XX:XX</string>
+    <string name="url_allgames_player" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/allgames/player</string>
+    <string name="url_allgames_reporter" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/allgames/reporter</string>
+    <string name="url_onegame_player_static" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/game/1/player</string>
+    <string name="url_onegame_random_static" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/game/1/randomPerson</string>
+    <string name="url_post_participantchoice_static" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/participant/1/choice</string>
+    <string name="url_gamereports_static" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/gamereports/1</string>
+    <string name="url_post_gamereportcreate_static" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/rest/gamereports/create/1</string>
+    <string name="something_went_wrong">Oops, something went wrong! Try again.</string>
     <string name="something_went_wrong_with_request">The request didn\'t quite go as planned.</string>
     <string name="txt_temporary_placeholder">Placeholder</string>
-    <string name="url_domain">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com</string>
-    <string name="vs_txt">VS</string>
+    <string name="url_domain" translatable="false">http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com</string>
+    <string name="vs_txt" translatable="false">VS</string>
     <string name="opponent_placeholder_txt">Opponent</string>
-    <string name="time_placeholder_txt">00:00</string>
-    <string name="date_placeholder_txt">01 jan. 2021</string>
+    <string name="time_placeholder_txt" translatable="false">00:00</string>
+    <string name="date_placeholder_txt" translatable="false">01 jan. 2021</string>
     <string name="btn_details">Details</string>
     <string name="btn_overview">Overview</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="faulty_gameid">The used game id was not correct.</string>
     <string name="insufficient_api_lvl">You do not have the right api level.</string>
     <string name="timer_error">The timer won\'t work.</string>
     <string name="location_txt">Location</string>
-    <string name="team1_txt">Team 1</string>
+    <string name="team1_txt" translatable="false">Team 1</string>
     <string name="team2_txt">Team 2</string>
-    <string name="location_placeholder_txt">Meenselstraat 118 \n3211 Binkom</string>
+    <string name="location_placeholder_txt" translatable="false">Meenselstraat 118 \n3211 Binkom</string>
     <string name="address_logo_description">Address logo</string>
     <string name="availability_txt">Availability</string>
-    <string name="error_login_page"><![CDATA[Username &amp; apikey can not be empty!]]></string>
-    <string name="login_email">Email</string>
+    <string name="error_login_page"><![CDATA[Username &amp; password can not be empty!]]></string>
+    <string name="login_email" translatable="false">Email</string>
     <string name="login_password">Password</string>
     <string name="details_comment_section">Type your comment here...</string>
     <string name="txt_send_btn">Send</string>
@@ -55,9 +54,12 @@
     <string name="txt_sick">Can\'t, I\'m sick.</string>
     <string name="txt_unavailable">Can\'t, I\'m busy</string>
     <string name="txt_game_repo_empty">There are no games scheduled.</string>
-    <string name="url_person_apikey">/person/api</string>
+    <string name="url_person_apikey" translatable="false">/person/api</string>
     <string name="error_sending_login">Something went wrong while sendig your credentials.</string>
     <string name="successfully_send_data">You\'ve successfully send your response.</string>
     <string name="unsuccessfully_send_data">Your response wasn\'t send successfully, try again.</string>
     <string name="error_availability_selector">You have to pick an availability.</string>
+    <string name="error_getting_game">Something went wrong while retrieving game.</string>
+    <string name="error_empty_report_field">You can\'t send an empty report. Fill in the textbox and try again.</string>
+    <string name="error_faulty_credentials">The e-mail or password you have entered is invalid.</string>
 </resources>

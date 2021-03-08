@@ -1,36 +1,62 @@
 package be.ucll.java.gip5;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import be.ucll.java.gip5.model.GameReportReturn;
+import be.ucll.java.gip5.model.GamesReturn;
+import be.ucll.java.gip5.model.Report;
 
 public class OverviewFragment extends Fragment {
 
     RecyclerView recyclerView;
     int gameId;
 
-    //todo: make call to api using game id
+    SharedPreferences sharedPreferences;
 
-    //todo: check if reporter -> else set part invisible
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_APIKEY = "apikey";
 
-    //todo: handle refresh button -> make call to api
+    private RequestQueue queue;
 
-    //todo: handle input box & onclick handler send btn
+    private static final String URL = "http://ucll-team5-gip5-web.eu-west-1.elasticbeanstalk.com/gamereports/";
+
+    LinearLayout editTextLin;
+    LinearLayout sendBtnLin;
+    EditText reportInput;
 
     public OverviewFragment() {
         // Required empty public constructor
@@ -47,20 +73,130 @@ public class OverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
         recyclerView = view.findViewById(R.id.overviewRecyclerView);
 
-        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), gameId + "", Toast.LENGTH_LONG).show();
+        Button sendBtn = view.findViewById(R.id.send_button);
+        ImageView refresh = view.findViewById(R.id.refresh);
+        refresh.bringToFront();
 
-        //this list is to staticly test the view.
-        List<Pair<String, String>> repoL = new ArrayList<Pair<String, String>>();
-        repoL.add(new Pair<>("15:45", "De wedstrijd is afgelopen."));
-        repoL.add(new Pair<>("15:06", "Goal!! 1-0 voor FcBinkom!"));
-        repoL.add(new Pair<>("14:45", "Rust"));
-        repoL.add(new Pair<>("14:16", "Er zijn nog niet zo heel veel grote kansen geweest. Als één van beide ploegen wilt winnen, gaan ze toch meer druk moeten zetten en hun kleine kansen afmaken."));
-        repoL.add(new Pair<>("14:01", "En we zijn van start gegaan, Binkom begint alvast heel aanvallend."));
+        editTextLin = view.findViewById(R.id.layout_edittext);
+        sendBtnLin = view.findViewById(R.id.layout_button);
+        reportInput = view.findViewById(R.id.editTextReport);
 
-        //todo: put adapter in new function, so you can call from onclicklistener
-        OverviewRecycleViewAdapter adapter = new OverviewRecycleViewAdapter(getContext(), repoL);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        makeCall();
+
+        sendBtn.setOnClickListener(v -> {
+            if(!reportInput.getText().toString().trim().isEmpty()){
+                sendReport();
+            } else {
+                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_empty_report_field), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        refresh.setOnClickListener(v -> {
+            makeCall();
+        });
+
         return view;
+    }
+
+    private void makeCall(){
+        try {
+            List<Pair<String, String>> reports = new ArrayList<Pair<String, String>>();
+
+            sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String apiK = sharedPreferences.getString(KEY_APIKEY, null);
+
+            String url = URL
+                    + gameId
+                    + "/"
+                    + URLEncoder.encode(apiK, "UTF-8");
+            Log.i("URL used: ", url);
+
+            queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getApplicationContext());
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null,
+                    response -> {
+                        //handle response
+                        JSONObject jsono = (JSONObject) response;
+
+                        Log.i("Return api: ", jsono.toString());
+
+                        GameReportReturn repRet = new Gson().fromJson(jsono.toString(), GameReportReturn.class);
+
+                        if(repRet != null && repRet.getRole() != null && repRet.getRole().getRoleType().equals("REPORTER")){
+                            editTextLin.setVisibility(View.VISIBLE);
+                            sendBtnLin.setVisibility(View.VISIBLE);
+                        }
+
+                        if(repRet != null && repRet.getError() == null){
+                            if(repRet.getReports() != null && repRet.getReports().size() > 0){
+                                for (Report rep:repRet.getReports()) {
+                                    reports.add(new Pair<>(rep.getTime().substring(0,5), rep.getText()));
+                                }
+                            }
+                            else {
+                                reports.add(new Pair<>("", "There were no reports."));
+                            }
+                        }
+                        else if(repRet != null && !repRet.getError().isEmpty()){
+                            reports.add(new Pair<>("", repRet.getError()));
+                        }
+                        else {
+                            reports.add(new Pair<>("", "Something went wrong while retreiving the reports."));
+                        }
+
+                        OverviewRecycleViewAdapter adapter = new OverviewRecycleViewAdapter(Objects.requireNonNull(getContext()), reports);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    },
+                    error -> {
+                        reports.add(new Pair<>("", "The game id was not found."));
+
+                        OverviewRecycleViewAdapter adapter = new OverviewRecycleViewAdapter(Objects.requireNonNull(getContext()), reports);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                });
+
+            queue.add(req);
+        }
+        catch (UnsupportedEncodingException e){
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+            Objects.requireNonNull(getActivity()).finish();
+        }
+    }
+
+    private void sendReport(){
+        //todo: handle input box & onclick handler send btn
+        try {
+            sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String apiK = sharedPreferences.getString(KEY_APIKEY, null);
+
+            String url = URL
+                    + gameId
+                    + "/"
+                    + URLEncoder.encode(apiK, "UTF-8");
+            Log.i("URL used: ", url);
+
+            queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getApplicationContext());
+
+            JSONObject postData = new JSONObject();
+            try{
+                postData.put("txt", reportInput.getText().toString().trim());
+            }
+            catch (JSONException e){
+                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+            }
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postData,
+                    response -> {
+                        makeCall();
+                    },
+                    error -> {
+                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                    });
+
+            queue.add(req);
+        }catch (UnsupportedEncodingException e){
+            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+        }
     }
 }

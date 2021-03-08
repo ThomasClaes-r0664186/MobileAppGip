@@ -18,80 +18,114 @@
                 android:id="@+id/date_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/date_placeholder_txt"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/time_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="@string/time_placeholder_txt"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date_txt"
-                android:layout_marginTop="5dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/date_txt" />
 
-            <TextView
-                android:id="@+id/vs_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/vs_background"
-                android:paddingLeft="15dp"
-                android:paddingTop="3dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="3dp"
-                android:text="@string/vs_txt"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/team1"
-                app:layout_constraintEnd_toStartOf="@+id/team2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/team1"
-                app:layout_constraintTop_toBottomOf="@+id/time_txt" />
+            <!-- Team VS Team -->
 
-            <TextView
-                android:id="@+id/team1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearTeams"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/team1_txt"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/vs_txt"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:minHeight="45dp"
+                android:weightSum="10"
+                app:layout_constraintTop_toBottomOf="@id/time_txt"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_txt"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/team2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/team2_txt"
-                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/vs_txt"
-                app:layout_constraintTop_toBottomOf="@+id/time_txt"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="4.25"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/team1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/team1_txt"
+                        android:textSize="18sp"
+                        android:textAlignment="center"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/vs_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/vs_background"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="3dp"
+                        android:text="@string/vs_txt"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="4.25"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/team2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/team2_txt"
+                        android:textSize="18sp"
+                        android:textAlignment="center"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Team VS Team -->
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/main_color_red"
+                android:gravity="center"
                 android:text="@string/location_txt"
-                android:textSize="20sp"
                 android:textColor="#ffffff"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vs_txt"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:background="@color/main_color_red"/>
+                app:layout_constraintTop_toBottomOf="@id/linearTeams" />
 
             <TextView
                 android:id="@+id/location_txt"
@@ -109,120 +143,119 @@
                 android:id="@+id/imageView5"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:contentDescription="@string/address_logo_description"
                 android:src="@mipmap/ic_address_logo"
                 app:layout_constraintEnd_toStartOf="@+id/location_txt"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
-                android:contentDescription="@string/address_logo_description"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/txtAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/main_color_red"
+                android:gravity="center"
                 android:text="@string/availability_txt"
-                android:textSize="20sp"
                 android:textColor="#ffffff"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:background="@color/main_color_red"/>
-            <!-- todo: add this above: android:visibility="gone" -->
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
             <LinearLayout
                 android:id="@+id/radiogroupLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
+                android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-                android:weightSum="1"
-                android:layout_marginTop="10dp" android:gravity="center">
-                <!-- todo: add this above: android:visibility="gone" -->
+                app:layout_constraintTop_toBottomOf="@+id/txtAvailability">
 
                 <RadioGroup
                     android:id="@+id/radiogroup"
                     android:layout_width="0dp"
-                    android:layout_weight="0.8"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/background_radio_group">
+                    android:layout_weight="0.8"
+                    android:background="@drawable/background_radio_group"
+                    android:orientation="vertical">
 
                     <RadioButton
                         android:id="@+id/radioButton1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_yes"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_yes"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_probably"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_probably"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
 
                     <RadioButton
                         android:id="@+id/radioButton3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_backup"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_backup"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
 
                     <RadioButton
                         android:id="@+id/radioButton4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_probably_not"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_probably_not"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
 
                     <RadioButton
                         android:id="@+id/radioButton5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_sick"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_sick"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
 
                     <RadioButton
                         android:id="@+id/radioButton6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_unavailable"
-                        android:textSize="18sp"
-                        android:textColor="#ffffff"
-                        android:buttonTint="#ffffff"
-                        tools:targetApi="lollipop"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#ffffff"
+                        android:text="@string/txt_unavailable"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        tools:targetApi="lollipop" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -230,58 +263,57 @@
                 android:id="@+id/layout_edittext_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
+                android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radiogroupLayout"
-                android:weightSum="1"
-                android:layout_marginTop="10dp" android:gravity="center">
-                <!-- todo: add this above: android:visibility="gone" -->
+                app:layout_constraintTop_toBottomOf="@+id/radiogroupLayout">
 
                 <EditText
-                    android:background="@drawable/costum_input_field"
                     android:id="@+id/editTextComment"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="0.8"
                     android:autofillHints="@string/details_comment_section"
-                    android:hint="@string/details_comment_section"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@drawable/costum_input_field"
                     android:gravity="top"
-                    android:padding="10dp"
+                    android:hint="@string/details_comment_section"
                     android:inputType="textMultiLine"
-                    android:maxLines="50"/>
+                    android:maxLines="50"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_button_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_edittext_comment"
-                android:weightSum="1"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="10dp"
-                android:gravity="center">
-                <!-- todo: add this above: android:visibility="gone" -->
+                app:layout_constraintTop_toBottomOf="@+id/layout_edittext_comment">
 
                 <Button
                     android:id="@+id/send_button"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/costum_send_button"
+                    android:backgroundTint="@null"
                     android:text="@string/txt_send_btn"
-                    android:textColor="@color/main_color_red"
                     android:textAllCaps="false"
+                    android:textColor="@color/main_color_red"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/costum_send_button"
-                    android:backgroundTint="@null"
-                    tools:ignore="UnusedAttribute"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"/>
+                    tools:ignore="UnusedAttribute" />
 
             </LinearLayout>
 

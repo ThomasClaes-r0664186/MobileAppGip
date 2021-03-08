@@ -23,9 +23,12 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 import be.ucll.java.gip5.model.Apikey;
+import be.ucll.java.gip5.model.GameReportReturn;
+import be.ucll.java.gip5.model.LoginError;
 
 public class LoginActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener {
 
@@ -77,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         }
 
         buttonSave.setOnClickListener(v -> {
-            //when clicked on save, put data on sharedpreferences
             if(username_field.getText() == null
                     || username_field.getText().toString().isEmpty()
                     || apiKey_field.getText() == null
@@ -112,7 +114,27 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+        if (error == null || error.networkResponse == null) {
+            return;
+        }
+
+        String body;
+        //get status code here
+        final String statusCode = String.valueOf(error.networkResponse.statusCode);
+        //get response body and parse with appropriate encoding
+        try {
+            body = new String(error.networkResponse.data,"UTF-8");
+
+            LoginError loginErr = new Gson().fromJson(body, LoginError.class);
+
+            if(loginErr != null && loginErr.getError() != null && loginErr.getError().equals("no match found")){
+                Toast.makeText(getApplicationContext(), getString(R.string.error_faulty_credentials), Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+            }
+        } catch (UnsupportedEncodingException e) {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

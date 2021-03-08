@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         txt_countdown = findViewById(R.id.txt_timerTxt);
         recyclerView = findViewById(R.id.gameRecyclerView);
 
-
         txt_countdown.setText(getString(R.string.countdown_placeholder));
 
         setSupportActionBar(toolbar);
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     public void onResponse(Object response) {
         JSONObject jsono = (JSONObject) response;
 
-        Log.i("URL used: ", jsono.toString());
+        Log.i("Return api: ", jsono.toString());
 
         if(jsono.has("Participants") || jsono.has("Games")){
             handleGames(jsono);
