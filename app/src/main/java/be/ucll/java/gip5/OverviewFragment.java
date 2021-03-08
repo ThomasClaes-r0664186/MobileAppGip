@@ -25,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +88,7 @@ public class OverviewFragment extends Fragment {
             if(!reportInput.getText().toString().trim().isEmpty()){
                 sendReport();
             } else {
-                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_empty_report_field), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_empty_report_field), R.style.mainToast, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -159,7 +160,7 @@ public class OverviewFragment extends Fragment {
             queue.add(req);
         }
         catch (UnsupportedEncodingException e){
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
             Objects.requireNonNull(getActivity()).finish();
         }
     }
@@ -183,7 +184,7 @@ public class OverviewFragment extends Fragment {
                 postData.put("txt", reportInput.getText().toString().trim());
             }
             catch (JSONException e){
-                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
             }
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postData,
@@ -191,12 +192,12 @@ public class OverviewFragment extends Fragment {
                         makeCall();
                     },
                     error -> {
-                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
                     });
 
             queue.add(req);
         }catch (UnsupportedEncodingException e){
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
         }
     }
 }

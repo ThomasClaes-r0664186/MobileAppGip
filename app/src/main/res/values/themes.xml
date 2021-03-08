@@ -13,4 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="mainToast">
+        <item name="stColorBackground">@color/main_color_red</item>
+        <item name="stTextColor">@color/white</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stIconStart">@mipmap/ic_round_mobile_logo_round</item>
+        <item name="stRadius">20dp</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">@color/white</item>
+    </style>
 </resources>

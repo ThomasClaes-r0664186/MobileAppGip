@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -21,22 +20,18 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -162,7 +157,7 @@ public class DetailsFragment extends Fragment {
                     int index = (radioGroup.indexOfChild(view.findViewById(radioGroup.getCheckedRadioButtonId()))) + 1; //returns -1 if none selected
 
                     if(index < 1 || index > 6){
-                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_availability_selector), Toast.LENGTH_LONG).show();
+                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_availability_selector), R.style.mainToast).show();
                     }
                     else {
                         sendData(index, comment);
@@ -171,7 +166,7 @@ public class DetailsFragment extends Fragment {
             }
         }
         else{
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_getting_game), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_getting_game), R.style.mainToast, Toast.LENGTH_LONG).show();
             Objects.requireNonNull(getActivity()).finish();
         }
 
@@ -197,24 +192,23 @@ public class DetailsFragment extends Fragment {
                 postData.put("comment", comment);
             }
             catch (JSONException e){
-                Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
                 Objects.requireNonNull(getActivity()).finish();
             }
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postData,
                     response -> {
-                        //Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.successfully_send_data), Toast.LENGTH_LONG).show();
                         Objects.requireNonNull(getActivity()).finish();
                     },
                     error -> {
-                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), Toast.LENGTH_LONG).show();
+                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
                         Objects.requireNonNull(getActivity()).finish();
                 });
 
             queue.add(req);
 
         }catch (UnsupportedEncodingException e){
-            Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
             Objects.requireNonNull(getActivity()).finish();
         }
     }

@@ -127,29 +127,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linearTeams" />
 
-            <TextView
-                android:id="@+id/location_txt"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLocationImage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/location_placeholder_txt"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                android:minHeight="40dp"
+                android:weightSum="6"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6">
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:contentDescription="@string/address_logo_description"
+                    android:src="@mipmap/ic_address_logo"
+                    android:layout_weight="1"/>
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:contentDescription="@string/address_logo_description"
-                android:src="@mipmap/ic_address_logo"
-                app:layout_constraintEnd_toStartOf="@+id/location_txt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/location_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/location_placeholder_txt"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtAvailability"
@@ -163,7 +175,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLocationImage" />
 
             <LinearLayout
                 android:id="@+id/radiogroupLayout"

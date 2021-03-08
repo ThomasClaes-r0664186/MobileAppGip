@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.json.JSONObject;
 
@@ -130,8 +131,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             queue.add(req);
         }
         catch (UnsupportedEncodingException e) {
-
-            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong_with_request), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.something_went_wrong_with_request), R.style.mainToast, Toast.LENGTH_LONG).show();
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
             recyclerView.setAdapter(adapter);
@@ -141,9 +141,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getApplicationContext(),
-                getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request),
-                Toast.LENGTH_LONG).show();
+        StyleableToast.makeText(getApplicationContext(), getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request), R.style.mainToast, Toast.LENGTH_LONG).show();
 
         GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
         recyclerView.setAdapter(adapter);
@@ -200,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
             else{
                 String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
-                Toast.makeText(getApplicationContext(), errorTxt, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast, Toast.LENGTH_LONG).show();
             }
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, repo);
@@ -208,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
         else{
-            Toast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), R.style.mainToast, Toast.LENGTH_LONG).show();
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
             recyclerView.setAdapter(adapter);
@@ -235,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
         else{
             String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
-            Toast.makeText(getApplicationContext(), errorTxt, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast, Toast.LENGTH_LONG).show();
             return "00:00:00";
         }
     }

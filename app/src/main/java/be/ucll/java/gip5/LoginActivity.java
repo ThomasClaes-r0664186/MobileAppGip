@@ -3,11 +3,9 @@ package be.ucll.java.gip5;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 import be.ucll.java.gip5.model.Apikey;
-import be.ucll.java.gip5.model.GameReportReturn;
 import be.ucll.java.gip5.model.LoginError;
 
 public class LoginActivity extends AppCompatActivity implements Response.Listener, Response.ErrorListener {
@@ -84,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                     || username_field.getText().toString().isEmpty()
                     || apiKey_field.getText() == null
                 || apiKey_field.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), getText(R.string.error_login_page), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_login_page), R.style.mainToast, Toast.LENGTH_LONG).show();
             }
             else{
                 usedUsername = username_field.getText().toString();
@@ -104,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             json.put(KEY_PASSWORD, password);
         }
         catch (JSONException e){
-            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, json, this, this);
@@ -128,12 +126,12 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             LoginError loginErr = new Gson().fromJson(body, LoginError.class);
 
             if(loginErr != null && loginErr.getError() != null && loginErr.getError().equals("no match found")){
-                Toast.makeText(getApplicationContext(), getString(R.string.error_faulty_credentials), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_faulty_credentials), R.style.mainToast, Toast.LENGTH_LONG).show();
             }else {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
             }
         } catch (UnsupportedEncodingException e) {
-            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -158,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             finish();
         }
         else{
-            Toast.makeText(getApplicationContext(), getString(R.string.error_sending_login), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
         }
     }
 }

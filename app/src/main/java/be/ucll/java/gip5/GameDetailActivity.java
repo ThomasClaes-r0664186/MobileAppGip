@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class GameDetailActivity extends AppCompatActivity {
             participant = new Participant(new Gson().fromJson(gameJson, Game.class));
         }
         else {
-            Toast.makeText(getApplicationContext(), getString(R.string.faulty_gameid), Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.faulty_gameid), R.style.mainToast, Toast.LENGTH_LONG).show();
             finish();
         }
 

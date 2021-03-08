@@ -32,11 +32,11 @@
     <string name="timer_error">The timer won\'t work.</string>
     <string name="location_txt">Location</string>
     <string name="team1_txt" translatable="false">Team 1</string>
-    <string name="team2_txt">Team 2</string>
+    <string name="team2_txt" translatable="false">Team 2</string>
     <string name="location_placeholder_txt" translatable="false">Meenselstraat 118 \n3211 Binkom</string>
     <string name="address_logo_description">Address logo</string>
     <string name="availability_txt">Availability</string>
-    <string name="error_login_page"><![CDATA[Username &amp; password can not be empty!]]></string>
+    <string name="error_login_page">Username &amp; password can not be empty!</string>
     <string name="login_email" translatable="false">Email</string>
     <string name="login_password">Password</string>
     <string name="details_comment_section">Type your comment here...</string>
