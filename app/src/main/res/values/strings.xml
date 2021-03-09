@@ -61,5 +61,6 @@
     <string name="error_availability_selector">You have to pick an availability.</string>
     <string name="error_getting_game">Something went wrong while retrieving game.</string>
     <string name="error_empty_report_field">You can\'t send an empty report. Fill in the textbox and try again.</string>
-    <string name="error_faulty_credentials">The e-mail or password you have entered is invalid.</string>
+    <string name="error_faulty_credentials">The e-mail or password you have entered are invalid.</string>
+    <string name="txt_logout"><u>Click here to log out.</u></string>
 </resources>

@@ -88,7 +88,7 @@ public class OverviewFragment extends Fragment {
             if(!reportInput.getText().toString().trim().isEmpty()){
                 sendReport();
             } else {
-                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_empty_report_field), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_empty_report_field), R.style.mainToast).show();
             }
         });
 
@@ -160,7 +160,7 @@ public class OverviewFragment extends Fragment {
             queue.add(req);
         }
         catch (UnsupportedEncodingException e){
-            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast).show();
             Objects.requireNonNull(getActivity()).finish();
         }
     }
@@ -184,7 +184,7 @@ public class OverviewFragment extends Fragment {
                 postData.put("txt", reportInput.getText().toString().trim());
             }
             catch (JSONException e){
-                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast).show();
             }
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, postData,
@@ -192,12 +192,12 @@ public class OverviewFragment extends Fragment {
                         makeCall();
                     },
                     error -> {
-                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
+                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast).show();
                     });
 
             queue.add(req);
         }catch (UnsupportedEncodingException e){
-            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast).show();
         }
     }
 }

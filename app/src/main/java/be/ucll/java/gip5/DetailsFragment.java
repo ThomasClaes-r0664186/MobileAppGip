@@ -166,7 +166,7 @@ public class DetailsFragment extends Fragment {
             }
         }
         else{
-            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_getting_game), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.error_getting_game), R.style.mainToast).show();
             Objects.requireNonNull(getActivity()).finish();
         }
 
@@ -192,7 +192,7 @@ public class DetailsFragment extends Fragment {
                 postData.put("comment", comment);
             }
             catch (JSONException e){
-                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast).show();
                 Objects.requireNonNull(getActivity()).finish();
             }
 
@@ -201,14 +201,14 @@ public class DetailsFragment extends Fragment {
                         Objects.requireNonNull(getActivity()).finish();
                     },
                     error -> {
-                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast, Toast.LENGTH_LONG).show();
+                        StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.unsuccessfully_send_data), R.style.mainToast).show();
                         Objects.requireNonNull(getActivity()).finish();
                 });
 
             queue.add(req);
 
         }catch (UnsupportedEncodingException e){
-            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), getString(R.string.something_went_wrong), R.style.mainToast).show();
             Objects.requireNonNull(getActivity()).finish();
         }
     }

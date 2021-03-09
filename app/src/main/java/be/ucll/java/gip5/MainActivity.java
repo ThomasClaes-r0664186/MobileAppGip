@@ -75,13 +75,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-
-        String username = sharedPreferences.getString(KEY_USERNAME, null);
-        String pw = sharedPreferences.getString(KEY_PASSWORD, null);
-        String apiK = sharedPreferences.getString(KEY_APIKEY, null);
-
-        if(apiK == null || username == null || pw == null || apiK.trim().isEmpty() || username.trim().isEmpty() || pw.trim().isEmpty()){
+        if(!checkLoggedIn()){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -93,10 +87,17 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     @Override
     protected void onRestart() {
         super.onRestart();
-        txt_countdown = findViewById(R.id.txt_timerTxt);
-        txt_countdown.setText(getString(R.string.countdown_placeholder));
 
-        getGames();
+        if(!checkLoggedIn()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+        else{
+            txt_countdown = findViewById(R.id.txt_timerTxt);
+            txt_countdown.setText(getString(R.string.countdown_placeholder));
+
+            getGames();
+        }
     }
 
     @Override
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             queue.add(req);
         }
         catch (UnsupportedEncodingException e) {
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.something_went_wrong_with_request), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.something_went_wrong_with_request), R.style.mainToast).show();
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
             recyclerView.setAdapter(adapter);
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        StyleableToast.makeText(getApplicationContext(), getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request), R.style.mainToast, Toast.LENGTH_LONG).show();
+        StyleableToast.makeText(getApplicationContext(), getText(R.string.something_went_wrong) + " " + getText(R.string.something_went_wrong_with_request), R.style.mainToast).show();
 
         GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
         recyclerView.setAdapter(adapter);
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             }
             else{
                 String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
-                StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast).show();
             }
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, repo);
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
         else{
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.txt_game_repo_empty), R.style.mainToast).show();
 
             GameRecycleViewAdapter adapter = new GameRecycleViewAdapter(this, new GamesReturn());
             recyclerView.setAdapter(adapter);
@@ -233,8 +234,23 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         }
         else{
             String errorTxt = getString(R.string.insufficient_api_lvl) + " " + getString(R.string.timer_error);
-            StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), errorTxt, R.style.mainToast).show();
             return "00:00:00";
+        }
+    }
+
+    public boolean checkLoggedIn(){
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+
+        String username = sharedPreferences.getString(KEY_USERNAME, null);
+        String pw = sharedPreferences.getString(KEY_PASSWORD, null);
+        String apiK = sharedPreferences.getString(KEY_APIKEY, null);
+
+        if(apiK == null || username == null || pw == null || apiK.trim().isEmpty() || username.trim().isEmpty() || pw.trim().isEmpty()){
+            return false;
+        }
+        else {
+            return true;
         }
     }
 }

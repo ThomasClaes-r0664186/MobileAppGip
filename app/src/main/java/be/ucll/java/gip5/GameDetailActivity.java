@@ -50,7 +50,7 @@ public class GameDetailActivity extends AppCompatActivity {
             participant = new Participant(new Gson().fromJson(gameJson, Game.class));
         }
         else {
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.faulty_gameid), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.faulty_gameid), R.style.mainToast).show();
             finish();
         }
 

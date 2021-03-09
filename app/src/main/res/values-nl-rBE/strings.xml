@@ -46,4 +46,5 @@
     <string name="error_getting_game">Er ging iets mis bij het ophalen van de wedstrijd.</string>
     <string name="error_empty_report_field">Je kan geen leeg verslag sturen. Vul de textbox eerst in.</string>
     <string name="error_faulty_credentials">Het e-mailadres of wachtwoord is niet geldig.</string>
+    <string name="txt_logout"><u>Klik hier om je af te melden.</u></string>
 </resources>

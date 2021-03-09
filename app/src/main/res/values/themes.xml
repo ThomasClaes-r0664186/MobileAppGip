@@ -22,5 +22,6 @@
         <item name="stRadius">20dp</item>
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">@color/white</item>
+        <item name="stLength">LONG</item>
     </style>
 </resources>

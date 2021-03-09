@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
     private RequestQueue queue;
 
     EditText username_field, apiKey_field;
+    TextView logout;
     Button buttonSave;
     SharedPreferences sharedPreferences;
 
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         username_field = findViewById(R.id.input_username);
         apiKey_field = findViewById(R.id.input_apiKey);
         buttonSave = findViewById(R.id.btn_saveProfile);
+        logout = findViewById(R.id.logoutTxt);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -82,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                     || username_field.getText().toString().isEmpty()
                     || apiKey_field.getText() == null
                 || apiKey_field.getText().toString().isEmpty()){
-                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_login_page), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_login_page), R.style.mainToast).show();
             }
             else{
                 usedUsername = username_field.getText().toString();
@@ -91,6 +95,21 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                 confirmIdentity(usedUsername, usedPassword);
             }
         });
+
+        if(apiK != null){
+            logout.setVisibility(View.VISIBLE);
+
+            logout.setOnClickListener(v -> {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.remove(KEY_USERNAME);
+                editor.remove(KEY_PASSWORD);
+                editor.remove(KEY_APIKEY);
+
+                editor.apply();
+                finish();
+            });
+        }
     }
 
     public void confirmIdentity(String username, String password){
@@ -102,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             json.put(KEY_PASSWORD, password);
         }
         catch (JSONException e){
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast).show();
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, json, this, this);
@@ -126,12 +145,12 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             LoginError loginErr = new Gson().fromJson(body, LoginError.class);
 
             if(loginErr != null && loginErr.getError() != null && loginErr.getError().equals("no match found")){
-                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_faulty_credentials), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_faulty_credentials), R.style.mainToast).show();
             }else {
-                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
+                StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast).show();
             }
         } catch (UnsupportedEncodingException e) {
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast).show();
         }
     }
 
@@ -156,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
             finish();
         }
         else{
-            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast, Toast.LENGTH_LONG).show();
+            StyleableToast.makeText(getApplicationContext(), getString(R.string.error_sending_login), R.style.mainToast).show();
         }
     }
 }
