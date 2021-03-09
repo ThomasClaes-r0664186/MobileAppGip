@@ -108,6 +108,9 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
 
                 editor.apply();
                 finish();
+                //gekozen om ervoor te zorgen dat de acitivity stopt ipv alles te clearen om dan in de
+                //main activity een nieuwe login intent te starten.
+                //bewust gedaan zodat de oncreate opnieuw afgaat ipv alles gewoon leeg te maken.
             });
         }
     }
